@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Job Finder</string>
+    <string name="title_home">Trang chủ</string>
+    <string name="title_job_search">Tìm kiếm việc làm</string>
+    <string name="title_notifications">Gửi thông báo</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_filter_dialog">Tìm kiếm nâng cao</string>
+    <string name="positive_button_filter_dialog">Xác nhận</string>
+    <string name="negative_button_filter_dialog">Hủy bỏ</string>
+</resources>
