@@ -1,5 +1,6 @@
 package com.example.jobfinderclient.ui.profile;
 
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -32,6 +33,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     TextView tvFullName, tvPosition, tvEmail, tvPhone, tvAddress, tvRoleName;
     ImageView ivCreatePersonInfo;
 
+    CardView cvEducation;
+
     private User currentUser;
 
 
@@ -55,6 +58,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tvRoleName = view.findViewById(R.id.tvRoleName);
 
         ivCreatePersonInfo = view.findViewById(R.id.ivCreatePersonInfo);
+
+        cvEducation = view.findViewById(R.id.cvEducation);
     }
 
     public void addEvents(){
