@@ -89,6 +89,7 @@ public class AccountViewModel extends AndroidViewModel {
                     editor.putLong("id",account.getId());
                     editor.putLong("userId",user.getId());
                     editor.putString("roleName",account.getRole().getName());
+                    editor.putLong("profileId",user.getProfile().getId());
                     editor.commit();
                 }
             }

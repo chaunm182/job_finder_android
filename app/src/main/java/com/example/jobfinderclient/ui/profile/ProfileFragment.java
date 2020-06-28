@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jobfinderclient.EducationActivity;
 import com.example.jobfinderclient.UpdatePersonInfoActivity;
 import com.example.jobfinderclient.common.Constant;
 import com.example.jobfinderclient.model.person.User;
@@ -33,7 +34,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     TextView tvFullName, tvPosition, tvEmail, tvPhone, tvAddress, tvRoleName;
     ImageView ivCreatePersonInfo;
 
-    CardView cvEducation;
+    CardView cvEducation,cvSkill, cvCertification,cvPrize, cvProject, cvWorkExperience;
 
     private User currentUser;
 
@@ -60,10 +61,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ivCreatePersonInfo = view.findViewById(R.id.ivCreatePersonInfo);
 
         cvEducation = view.findViewById(R.id.cvEducation);
+        cvCertification = view.findViewById(R.id.cvCertification);
+        cvPrize = view.findViewById(R.id.cvPrize);
+        cvProject = view.findViewById(R.id.cvProject);
+        cvSkill = view.findViewById(R.id.cvSkill);
+        cvWorkExperience = view.findViewById(R.id.cvWorkExperience);
     }
 
     public void addEvents(){
         ivCreatePersonInfo.setOnClickListener(this);
+        cvEducation.setOnClickListener(this);
+        cvWorkExperience.setOnClickListener(this);
+        cvSkill.setOnClickListener(this);
+        cvProject.setOnClickListener(this);
+        cvPrize.setOnClickListener(this);
+        cvCertification.setOnClickListener(this);
     }
 
     public void showUserInfo(){
@@ -114,6 +126,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(this.getActivity(), UpdatePersonInfoActivity.class);
                 intent.putExtra("user",currentUser);
                 this.startActivityForResult(intent, Constant.REQUEST_CODE_UPDATE_PERSON_INFO);
+                break;
+            }
+            case R.id.cvEducation:{
+                Intent intent = new Intent(this.getActivity(), EducationActivity.class);
+                this.startActivity(intent);
+                break;
+            }
+            case R.id.cvCertification:{
+                //tạo intent rồi start
+                break;
+            }
+            case R.id.cvPrize:{
+                //tạo intent rồi start
+                break;
+            }
+            case R.id.cvSkill:{
+                //tạo intent rồi start
+                break;
+            }
+            case R.id.cvProject:{
+                //tạo intent rồi start
+                break;
+            }
+            case R.id.cvWorkExperience:{
+                //tạo intent rồi start
                 break;
             }
         }

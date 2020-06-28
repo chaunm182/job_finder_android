@@ -12,15 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UpdatePersonInfoActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
-        <activity android:name=".PostActivity"></activity>
+        <activity android:name=".SaveEducationActivity"></activity>
+        <activity android:name=".EducationActivity" />
+        <activity
+            android:name=".UpdatePersonInfoActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".PostActivity" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            >
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
