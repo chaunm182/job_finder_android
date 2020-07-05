@@ -88,4 +88,33 @@ public class NotificationsViewModel extends ViewModel {
             }
         });
     }
+
+    public void deleteSubscriberById(Integer id){
+        SubscriberClient subscriberClient = SubscriberClient.getINSTANCE();
+        subscriberClient.deleteSubscriberById(id).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.isSuccessful()){
+                    boolean isDeleted = response.body();
+                    if(isDeleted){
+                        List<Subscriber> subscribers = subscribersLiveData.getValue();
+                        int removePosition = -1;
+                        for(int i=0;i<subscribers.size();i++){
+                            if(id==subscribers.get(i).getId()){
+                                removePosition = i;
+                                break;
+                            }
+                        }
+                        subscribers.remove(removePosition);
+                        subscribersLiveData.setValue(subscribers);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("NotificationViewModel", "onFailure: ",t );
+            }
+        });
+    }
 }

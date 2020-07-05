@@ -3,13 +3,16 @@ package com.example.jobfinderclient.ui.notifications;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jobfinderclient.PayActivity;
 import com.example.jobfinderclient.R;
 import com.example.jobfinderclient.adapter.SubscribeAdapter;
 import com.example.jobfinderclient.common.Constant;
@@ -34,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment {
+public class NotificationsFragment extends Fragment implements SubscribeAdapter.OnSubscriberListener {
 
     private NotificationsViewModel notificationsViewModel;
     private String roleName;
@@ -45,6 +49,8 @@ public class NotificationsFragment extends Fragment {
 
     RecyclerView rvSubscribe;
     SubscribeAdapter subscribeAdapter;
+
+    Button btnPay;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -89,7 +95,7 @@ public class NotificationsFragment extends Fragment {
 
             //find subscriber by user id
             rvSubscribe = view.findViewById(R.id.rvSubscribe);
-            subscribeAdapter = new SubscribeAdapter(new ArrayList<>());
+            subscribeAdapter = new SubscribeAdapter(new ArrayList<>(), this);
             rvSubscribe.setLayoutManager(new LinearLayoutManager(this.getContext(),
                     RecyclerView.VERTICAL,false));
             rvSubscribe.setAdapter(subscribeAdapter);
@@ -103,6 +109,16 @@ public class NotificationsFragment extends Fragment {
                 }
             });
 
+        }
+        else if(roleName.equals("ROLE_USER")){
+            btnPay = view.findViewById(R.id.btnPay);
+            btnPay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(NotificationsFragment.this.getActivity(), PayActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -155,5 +171,11 @@ public class NotificationsFragment extends Fragment {
                 })
                 .create();
         alertDialog.show();
+    }
+
+
+    @Override
+    public void onDeleteClicked(Subscriber subscriberClicked) {
+        notificationsViewModel.deleteSubscriberById(subscriberClicked.getId());
     }
 }

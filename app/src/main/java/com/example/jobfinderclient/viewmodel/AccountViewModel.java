@@ -29,10 +29,12 @@ public class AccountViewModel extends AndroidViewModel {
     private Context context;
 
     private MutableLiveData<Boolean> isProgress;
+    private MutableLiveData<Boolean> isEmailExist;
     public AccountViewModel(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
         isProgress = new MutableLiveData<>();
+        isEmailExist = new MutableLiveData<>();
     }
 
     public void findAccountByUsernameAndPassword(String username, String password){
@@ -76,6 +78,55 @@ public class AccountViewModel extends AndroidViewModel {
         });
     }
 
+    public void findUserByAccountEmail(String email){
+        UserClient userClient = UserClient.getINSTANCE();
+        userClient.findByEmail(email).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()){
+                    User user = response.body();
+                    saveUserSession(user);
+
+                    Intent intent = new Intent();
+                    intent.setClass(context, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                if(t.getLocalizedMessage().startsWith("End of input")){
+                    isEmailExist.setValue(false);
+                }
+            }
+        });
+    }
+
+    public void registerNewUser(User user){
+        UserClient userClient = UserClient.getINSTANCE();
+        userClient.registerNewUser(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()){
+                    User result = response.body();
+                    saveUserSession(result);
+
+                    Intent intent = new Intent();
+                    intent.setClass(context, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("AccountViewModel", "onFailure",t);
+            }
+        });
+    }
+
+
     private void saveAccountSession(Account account) {
         UserClient userClient = UserClient.getINSTANCE();
         userClient.findByAccountId(account.getId()).enqueue(new Callback<User>() {
@@ -83,14 +134,7 @@ public class AccountViewModel extends AndroidViewModel {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     User user = response.body();
-                    SharedPreferences sharedPreferences = context.getSharedPreferences(
-                            Constant.SHARED_ACCOUNT_SESSION, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor  = sharedPreferences.edit();
-                    editor.putLong("id",account.getId());
-                    editor.putLong("userId",user.getId());
-                    editor.putString("roleName",account.getRole().getName());
-                    editor.putLong("profileId",user.getProfile().getId());
-                    editor.commit();
+                    saveUserSession(user);
                 }
             }
 
@@ -103,7 +147,26 @@ public class AccountViewModel extends AndroidViewModel {
 
     }
 
+    private void saveUserSession(User user){
+        Account account = user.getAccount();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                Constant.SHARED_ACCOUNT_SESSION, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor  = sharedPreferences.edit();
+        editor.putLong("id",account.getId());
+        editor.putLong("userId",user.getId());
+        editor.putString("username",account.getUsername());
+        editor.putString("roleName",account.getRole().getName());
+        editor.putLong("profileId",user.getProfile().getId());
+        editor.commit();
+    }
+
+
+
     public MutableLiveData<Boolean> getIsProgress() {
         return isProgress;
+    }
+
+    public MutableLiveData<Boolean> getIsEmailExist() {
+        return isEmailExist;
     }
 }

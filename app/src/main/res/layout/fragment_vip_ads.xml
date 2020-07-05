@@ -127,7 +127,7 @@
                     android:textStyle="bold|italic"
                     android:visibility="visible"
                     app:layout_constraintStart_toEndOf="@+id/tvFullName"
-                    app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/ivAvatar" />
             </LinearLayout>
 
             <LinearLayout
@@ -159,14 +159,14 @@
                     android:textStyle="bold|italic"
                     android:visibility="visible"
                     app:layout_constraintStart_toEndOf="@+id/tvFullName"
-                    app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/ivAvatar" />
             </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnPay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"

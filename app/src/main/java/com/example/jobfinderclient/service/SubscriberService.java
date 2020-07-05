@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -16,6 +17,9 @@ public interface SubscriberService {
 
     @POST("subscribers")
     public Call<Subscriber> addSubscriber(@Body Subscriber subscriber);
+
+    @DELETE("subscribers/{id}")
+    public Call<Boolean> deleteSubscriberById(@Path("id") Integer id);
 
 
 }

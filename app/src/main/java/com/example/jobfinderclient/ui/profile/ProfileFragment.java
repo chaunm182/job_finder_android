@@ -20,12 +20,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.jobfinderclient.EducationActivity;
+import com.example.jobfinderclient.SkillActivity;
 import com.example.jobfinderclient.UpdatePersonInfoActivity;
 import com.example.jobfinderclient.common.Constant;
 import com.example.jobfinderclient.model.person.User;
 import com.example.jobfinderclient.viewmodel.ProfileViewModel;
 import com.example.jobfinderclient.R;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
@@ -33,6 +37,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     TextView tvFullName, tvPosition, tvEmail, tvPhone, tvAddress, tvRoleName;
     ImageView ivCreatePersonInfo;
+    CircleImageView ivAvatar;
 
     CardView cvEducation,cvSkill, cvCertification,cvPrize, cvProject, cvWorkExperience;
 
@@ -59,6 +64,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tvRoleName = view.findViewById(R.id.tvRoleName);
 
         ivCreatePersonInfo = view.findViewById(R.id.ivCreatePersonInfo);
+        ivAvatar = view.findViewById(R.id.ivAvatar);
 
         cvEducation = view.findViewById(R.id.cvEducation);
         cvCertification = view.findViewById(R.id.cvCertification);
@@ -104,6 +110,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 String phone = user.getPhone();
                 tvPhone.setText(phone);
 
+                //set avatar
+                String avatar = user.getProfile().getAvatar();
+                if(avatar!=null){
+                    Glide.with(ProfileFragment.this.getContext())
+                            .load(user.getProfile().getAvatar())
+                            .into(ivAvatar);
+                }
+
+
 
                 StringBuilder address = new StringBuilder("");
                 if(user.getAddress()!=null){
@@ -142,7 +157,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.cvSkill:{
-                //tạo intent rồi start
+                Intent intent = new Intent(this.getActivity(), SkillActivity.class);
+                this.startActivity(intent);
                 break;
             }
             case R.id.cvProject:{

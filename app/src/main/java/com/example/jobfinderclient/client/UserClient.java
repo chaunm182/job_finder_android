@@ -33,4 +33,12 @@ public class UserClient {
     public Call<User> findByAccountId(Long accountId){
         return userService.findByAccountId(accountId);
     }
+
+    public Call<User> findByEmail(String email){
+        return userService.findByEmail(email);
+    }
+
+    public Call<User> registerNewUser(User user){
+        return userService.registerNewUser(user);
+    }
 }

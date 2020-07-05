@@ -7,4 +7,7 @@
     <string name="title_filter_dialog">Tìm kiếm nâng cao</string>
     <string name="positive_button_filter_dialog">Xác nhận</string>
     <string name="negative_button_filter_dialog">Hủy bỏ</string>
+    <string name="facebook_app_id">549992309003083</string>
+    <string name="fb_login_protocol_scheme">fb549992309003083</string>
+
 </resources>

@@ -34,4 +34,8 @@ public class SubscriberClient {
         return subscriberService.addSubscriber(subscriber);
     }
 
+    public Call<Boolean> deleteSubscriberById(Integer id){
+        return subscriberService.deleteSubscriberById(id);
+    }
+
 }

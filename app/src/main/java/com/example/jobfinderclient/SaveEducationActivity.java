@@ -71,7 +71,7 @@ public class SaveEducationActivity extends AppCompatActivity implements View.OnC
             }
             case R.id.btnSave:{
                 Education education = new Education();
-                if(etId.getText().toString()!=null){
+                if(!etId.getText().toString().equals("")){
                     education.setId(Integer.parseInt(etId.getText().toString()));
                 }
                 SharedPreferences sharedPreferences = getSharedPreferences(Constant.SHARED_ACCOUNT_SESSION,MODE_PRIVATE);

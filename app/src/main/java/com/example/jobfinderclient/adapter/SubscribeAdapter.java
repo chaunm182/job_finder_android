@@ -3,9 +3,11 @@ package com.example.jobfinderclient.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jobfinderclient.R;
@@ -16,9 +18,11 @@ import java.util.List;
 public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.SubscribeViewHolder> {
 
     private List<Subscriber> subscribers;
+    private OnSubscriberListener onSubscriberListener;
 
-    public SubscribeAdapter(List<Subscriber> subscribers) {
+    public SubscribeAdapter(List<Subscriber> subscribers, OnSubscriberListener onSubscriberListener) {
         this.subscribers = subscribers;
+        this.onSubscriberListener = onSubscriberListener;
     }
 
     @NonNull
@@ -33,6 +37,13 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.Subs
         Subscriber subscriber = subscribers.get(position);
         holder.tvJobCategoryName.setText(subscriber.getJobCategory().getName());
         holder.tvSubscribeAt.setText(subscriber.getCreatedAt().toString());
+
+        holder.ivDeleteSubscriber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSubscriberListener.onDeleteClicked(subscriber);
+            }
+        });
     }
 
     @Override
@@ -47,11 +58,17 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.Subs
 
     public class SubscribeViewHolder extends RecyclerView.ViewHolder{
         TextView tvJobCategoryName, tvSubscribeAt;
+        ImageView ivDeleteSubscriber;
 
         public SubscribeViewHolder(@NonNull View itemView) {
             super(itemView);
             tvJobCategoryName = itemView.findViewById(R.id.tvJobCategoryName);
             tvSubscribeAt = itemView.findViewById(R.id.tvSubscribeAt);
+            ivDeleteSubscriber = itemView.findViewById(R.id.ivDeleteSubscribe);
         }
+    }
+
+    public interface OnSubscriberListener{
+        void onDeleteClicked(Subscriber subscriberClicked);
     }
 }
